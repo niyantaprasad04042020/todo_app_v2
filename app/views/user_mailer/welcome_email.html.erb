@@ -3,4 +3,7 @@
     You have successfully signed up to example.com,
     your username is: <%= @user.first_name %> <%= @user.last_name %>.<br>
   </p>
+
+  <%= link_to "Please visit the link to confirm the email id", "users/confirm?token=#{@user.confirmation_token}" %>
+
 <p>Thanks for joining and have a great day!</p>
