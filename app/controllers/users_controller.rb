@@ -16,8 +16,12 @@ class UsersController < ApplicationController
     @user = User.find_by(email_id: params[:email_id])
 
     if @user && @user.authenticate(params[:password])
-      token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      if user.confirmed_at?
+        token = encode_token({user_id: @user.id})
+        render json: {user: @user, token: token}
+      else
+        render json: {error: 'Email not verified' }, status: :unauthorized
+      end
     else
       render json: {error: "Invalid username or password"}
     end
