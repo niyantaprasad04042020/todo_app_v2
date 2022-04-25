@@ -15,7 +15,6 @@ RSpec.describe "PasswordResets", type: :request do
 
   describe "POST #create" do
     it "should send reset password email" do
-      byebug
       @valid_user  = FactoryBot.create :user, :valid_user
       expect(UserMailer).to receive(:reset_password).once.and_return(double(deliver_now: true))
       post :create, params: { email: @valid_user.email_id }

@@ -70,7 +70,6 @@ RSpec.describe User, type: :model do
   end
 
   it 'validates presence of first name' do
-  	byebug
   	@invalid_first_name   = FactoryBot.create :user, :invalid_first_name
     expect(@invalid_first_name).to_not be_valid
   end
