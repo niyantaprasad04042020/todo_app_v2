@@ -7,4 +7,11 @@ Rails.application.routes.draw do
       get 'confirm'
     end
   end
+
+  resources :password_resets, only: [:create] do
+    collection do
+      get 'edit', action: :edit, as: :edit
+      patch ':token', action: :update
+    end
+  end
 end
