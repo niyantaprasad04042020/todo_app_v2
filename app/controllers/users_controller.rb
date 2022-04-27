@@ -2,11 +2,15 @@ class UsersController < ApplicationController
   before_action :authorized, only: [:auto_login]
 
   def signup
-  	@user = User.create(user_params)
+    @user = User.new
+  end
+
+  def create
+    @user = User.create(user_params)
     if @user.valid?
       UserMailer.welcome_email(@user).deliver_now
       token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      redirect_to root_path
     else
       render json: {error: "Invalid username or password"}
     end
@@ -48,7 +52,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:first_name, :last_name, :email_id, :phone_no, :password)
+    params.require(:user).permit(:first_name, :last_name, :email_id, :phone_no, :password, :authenticity_token)
   end
 
 end
