@@ -12,7 +12,7 @@ class PasswordResetController < ApplicationController
   end
 
   def edit
-    render json: status: :ok
+    render json: :ok
   end
 
   def update

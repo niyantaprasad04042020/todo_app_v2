@@ -14,6 +14,13 @@ RSpec.describe "PasswordResets", type: :request do
   end
 
   describe "POST #create" do
+    # it "should send reset password email" do
+    #   headers = { "ACCEPT" => "application/json" } 
+    #   @valid_user  = FactoryBot.create :user, :valid_user
+    #   expect(UserMailer).to receive(:reset_password).once.and_return(double(deliver_now: true))
+    #   post "/password_reset", params: { email_id: @valid_user.email_id}, :headers => headers
+    #   expect(response).to be_successful
+    # end
 
     it "should send reset password email" do
       headers = { "ACCEPT" => "application/json" }
@@ -24,6 +31,13 @@ RSpec.describe "PasswordResets", type: :request do
   end
 
   describe "GET #edit" do
+    # it "should generate password token" do
+    #   headers = { "ACCEPT" => "application/json" }
+    #   @valid_user  = FactoryBot.create :user, :valid_user
+    #   @valid_user.generate_token_for_password_reset!
+    #   get "/password_reset/edit", params: { token: @valid_user.reset_password_token }, :headers => headers
+    #   expect(response).to be_successful
+    # end
 
     it "returns unauthorized for expired tokens" do
       headers = { "ACCEPT" => "application/json" }
@@ -54,6 +68,13 @@ RSpec.describe "PasswordResets", type: :request do
 
   describe "PATCH #update" do
     let(:new_password) { 'new_password' }
+    # it "should update the password"do
+    #   headers = { "ACCEPT" => "application/json" }
+    #   @valid_user  = FactoryBot.create :user, :valid_user
+    #   @valid_user.generate_token_for_password_reset!
+    #   patch "/password_reset/update", params: { token: @valid_user.reset_password_token, password: new_password, password_confirmation: new_password }
+    #   expect(response).to be_successful
+    # end
 
     it 'returns 422 if passwords do not match' do
       headers = { "ACCEPT" => "application/json" }
