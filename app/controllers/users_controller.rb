@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     @user = User.find_by(email_id: user_params[:email_id])
 
     if @user && @user.authenticate(user_params[:password])
-      if user.confirmed_at?
+      if @user.confirmed_at?
         token = encode_token({user_id: @user.id})
         redirect_to root_path
       else

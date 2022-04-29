@@ -3,13 +3,8 @@ Rails.application.routes.draw do
   get "/login", to: "users#new"
   post "/login", to: "users#login"
   get "/auto_login", to: "users#auto_login"
-  # resources :users, except: [:signup]
-  resources :users, only: :signup do
-    collection do
-      get 'confirm'
-    end
-  end
-
+  get "/users/confirm", to: "users#confirm"
+  resources :users, except: [:signup]
 
   resources :password_reset, only: [:create] do
     collection do

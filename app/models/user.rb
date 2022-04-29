@@ -41,8 +41,7 @@ class User
 
   def mark_as_confirmed!
     self.confirmation_token = nil
-    self.confirmed_at       = Time.now.utc
-    save
+    self.update_attribute(:confirmed_at , Time.now.utc)
   end
 
   def generate_token_for_password_reset!
