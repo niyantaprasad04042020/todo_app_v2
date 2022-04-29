@@ -10,19 +10,22 @@ class UsersController < ApplicationController
     if @user.valid?
       UserMailer.welcome_email(@user).deliver_now
       token = encode_token({user_id: @user.id})
-      redirect_to root_path
+      redirect_to login_path
     else
       render json: {error: "Invalid username or password"}
     end
   end
 
-  def login
-    @user = User.find_by(email_id: params[:email_id])
+  def new 
+  end
 
-    if @user && @user.authenticate(params[:password])
+  def login
+    @user = User.find_by(email_id: user_params[:email_id])
+
+    if @user && @user.authenticate(user_params[:password])
       if user.confirmed_at?
         token = encode_token({user_id: @user.id})
-        render json: {user: @user, token: token}
+        redirect_to root_path
       else
         render json: {error: 'Email not verified' }, status: :unauthorized
       end
@@ -41,8 +44,7 @@ class UsersController < ApplicationController
 
     user = User.find_by(confirmation_token: token)
 
-    if user.present? && user.confirmation_token_valid?
-      user.mark_as_confirmed!
+    if user.present? && user.mark_as_confirmed!
       render json: {status: 'User confirmed successfully'}, status: :ok
     else
       render json: {status: 'Invalid token'}, status: :not_found

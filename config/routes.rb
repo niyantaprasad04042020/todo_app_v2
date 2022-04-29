@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
-  get 'post/index'
   get "/signup", to: "users#signup"
+  get "/login", to: "users#new"
   post "/login", to: "users#login"
   get "/auto_login", to: "users#auto_login"
-  root to: "post#index"
-  resources :users, except: [:signup]
-  # resources :users, only: :signup do
-  #   collection do
-  #     get 'confirm'
-  #   end
-  # end
+  # resources :users, except: [:signup]
+  resources :users, only: :signup do
+    collection do
+      get 'confirm'
+    end
+  end
+
 
   resources :password_reset, only: [:create] do
     collection do
@@ -17,4 +17,7 @@ Rails.application.routes.draw do
       patch ':token', action: :update
     end
   end
+
+  resources :post
+  root to: "post#index"
 end
